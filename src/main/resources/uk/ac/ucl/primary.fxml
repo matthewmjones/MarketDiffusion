@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<SplitPane dividerPositions="0.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.ac.ucl.PrimaryController">
+  <items>
+    <AnchorPane maxWidth="240.0" minHeight="0.0" minWidth="240.0" prefHeight="160.0" prefWidth="240.0">
+         <children>
+            <Label layoutX="15.0" layoutY="5.0" text="Country:" />
+            <ChoiceBox fx:id="countryChoice" layoutX="75.0" layoutY="20.0" prefWidth="150.0" />
+            <Label layoutX="15.0" layoutY="55.0" text="p (Innovation):" />
+            <Slider fx:id="pSlider" layoutX="15.0" layoutY="70.0" prefWidth="210.0" />
+            <Label layoutX="15.0" layoutY="105.0" text="q (Imitation):" />
+            <Slider fx:id="qSlider" layoutX="15.0" layoutY="120.0" prefWidth="210.0" />
+            <HBox layoutX="15.0" layoutY="170.0" prefHeight="40.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <Button fx:id="startButton" mnemonicParsing="false" text="Start" textAlignment="CENTER" />
+                  <Button fx:id="stopButton" mnemonicParsing="false" text="Stop" />
+                  <Button fx:id="resetButton" mnemonicParsing="false" text="Reset" />
+               </children>
+            </HBox>
+            <Separator layoutX="-15.0" layoutY="220.0" prefWidth="270.0" />
+            <Label layoutX="15.0" layoutY="240.0" text="Population:" />
+            <Slider fx:id="numPoints" layoutX="15.0" layoutY="255.0" prefWidth="210.0" />
+            <Label layoutX="15.0" layoutY="290.0" text="Initial Adopters (k):" />
+            <Slider fx:id="kSlider" layoutX="15.0" layoutY="305.0" prefWidth="210.0" />
+            <Label layoutX="15.0" layoutY="340.0" text="Animation Speed:" />
+            <Slider fx:id="speedSlider" layoutX="15.0" layoutY="355.0" prefWidth="210.0" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <Canvas fx:id="mapCanvas" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>
