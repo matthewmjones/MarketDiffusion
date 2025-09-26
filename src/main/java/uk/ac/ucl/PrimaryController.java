@@ -21,6 +21,7 @@ import uk.ac.ucl.model.Person;
 import uk.ac.ucl.model.RenderingConfig;
 import uk.ac.ucl.model.SimulationParameters;
 import uk.ac.ucl.model.SimulationResult;
+import uk.ac.ucl.service.CsvLoggingService;
 import uk.ac.ucl.service.DiffusionSimulationService;
 import uk.ac.ucl.service.DiffusionSimulationServiceImpl;
 import uk.ac.ucl.service.GeographicDataService;
@@ -69,6 +70,7 @@ public class PrimaryController implements Initializable {
     private final GeographicDataService geographicDataService = new GeographicDataServiceImpl();
     private final DiffusionSimulationService diffusionSimulationService = new DiffusionSimulationServiceImpl();
     private final MapRenderingService mapRenderingService = new MapRenderingServiceImpl();
+    private final CsvLoggingService csvLoggingService = new CsvLoggingService();
     private final RenderingConfig renderingConfig = RenderingConfig.getDefault();
 
     private GeoJsonData currentGeoData;
@@ -176,6 +178,15 @@ public class PrimaryController implements Initializable {
         resetAdoptionStates();
         initializeAdopters();
 
+        // Start CSV logging
+        try {
+            String selectedCountry = countryChoice.getValue();
+            csvLoggingService.startLogging(selectedCountry != null ? selectedCountry : "unknown");
+        } catch (Exception e) {
+            System.err.println("Failed to start CSV logging: " + e.getMessage());
+            // Continue simulation even if logging fails
+        }
+
         double animationDelay = speedSlider.getValue();
         diffusionAnimation = new Timeline(new KeyFrame(
             Duration.millis(animationDelay),
@@ -195,6 +206,10 @@ public class PrimaryController implements Initializable {
         if (diffusionAnimation != null) {
             diffusionAnimation.stop();
         }
+
+        // Stop CSV logging
+        csvLoggingService.stopLogging();
+
         startButton.setDisable(false);
         stopButton.setDisable(true);
         resetButton.setDisable(false);
@@ -232,6 +247,10 @@ public class PrimaryController implements Initializable {
 
         int adoptedCount = diffusionSimulationService.countAdopters(people);
         double adoptionPercentage = (adoptedCount * 100.0) / people.size();
+
+        // Log initialization to CSV
+        csvLoggingService.logDiffusionStep(currentTimeStep, adoptedCount, adoptedCount, people.size(), adoptionPercentage);
+
         System.out.printf("Initialization complete - Time step: %d, Adopted: %d/%d (%.1f%%)%n",
                 currentTimeStep, adoptedCount, people.size(), adoptionPercentage);
     }
@@ -253,6 +272,10 @@ public class PrimaryController implements Initializable {
         if (currentGeoData != null) {
             renderCurrentMap();
         }
+
+        // Log diffusion step to CSV
+        csvLoggingService.logDiffusionStep(result.getTimeStep(), result.getNewAdopters(),
+                result.getTotalAdopted(), result.getTotalPopulation(), result.getAdoptionPercentage());
 
         System.out.printf("Time step: %d, New adopters: %d, Total adopted: %d/%d (%.1f%%)%n",
                 result.getTimeStep(), result.getNewAdopters(), result.getTotalAdopted(),

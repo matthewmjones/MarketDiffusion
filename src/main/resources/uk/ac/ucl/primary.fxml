@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<SplitPane dividerPositions="0.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.ac.ucl.PrimaryController">
+<SplitPane dividerPositions="0.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.ac.ucl.PrimaryController">
   <items>
-    <AnchorPane maxWidth="240.0" minHeight="0.0" minWidth="240.0" prefHeight="160.0" prefWidth="240.0">
+    <AnchorPane maxWidth="240.0" minHeight="0.0" minWidth="240.0" prefHeight="160.0" prefWidth="240.0" styleClass="control-panel">
          <children>
             <Label layoutX="15.0" layoutY="5.0" text="Country:" />
             <ChoiceBox fx:id="countryChoice" layoutX="75.0" layoutY="20.0" prefWidth="150.0" />
@@ -20,7 +20,7 @@
             <Slider fx:id="pSlider" layoutX="15.0" layoutY="70.0" prefWidth="210.0" />
             <Label layoutX="15.0" layoutY="105.0" text="q (Imitation):" />
             <Slider fx:id="qSlider" layoutX="15.0" layoutY="120.0" prefWidth="210.0" />
-            <HBox layoutX="15.0" layoutY="170.0" prefHeight="40.0" prefWidth="200.0" spacing="5.0">
+            <HBox layoutX="15.0" layoutY="170.0" prefHeight="40.0" prefWidth="200.0" spacing="5.0" styleClass="button-container">
                <children>
                   <Button fx:id="startButton" mnemonicParsing="false" text="Start" textAlignment="CENTER" />
                   <Button fx:id="stopButton" mnemonicParsing="false" text="Stop" />
@@ -35,7 +35,7 @@
             <Label layoutX="15.0" layoutY="340.0" text="Animation Speed:" />
             <Slider fx:id="speedSlider" layoutX="15.0" layoutY="355.0" prefWidth="210.0" />
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="canvas-container">
          <children>
             <Canvas fx:id="mapCanvas" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children></AnchorPane>

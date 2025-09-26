@@ -1,0 +1,245 @@
+/* MarketDiffusion JavaFX Application Styles */
+
+.root {
+    -fx-background-color: #B9D8C2;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 13px;
+}
+
+/* Split Pane Styling */
+.split-pane {
+    -fx-background-color: #9AC2C9;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: #d0d0d0;
+    -fx-border-color: transparent;
+    -fx-padding: 0 2 0 2;
+}
+
+/* Left Control Panel */
+.control-panel {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 15;
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+}
+
+/* Choice Box */
+.choice-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 12px;
+}
+
+.choice-box:hover {
+    -fx-border-color: #999999;
+}
+
+.choice-box:focused {
+    -fx-border-color: #0078d4;
+    -fx-background-color: #ffffff;
+}
+
+/* Sliders */
+.slider {
+    -fx-pref-height: 20px;
+}
+
+.slider .track {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-pref-height: 4px;
+}
+
+.slider .thumb {
+    -fx-background-color: #0078d4;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-pref-width: 16px;
+    -fx-pref-height: 16px;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+}
+
+.slider .thumb:hover {
+    -fx-background-color: #106ebe;
+    -fx-cursor: hand;
+}
+
+.slider .thumb:pressed {
+    -fx-background-color: #005a9e;
+}
+
+.slider .colored-track {
+    -fx-background-color: #0078d4;
+    -fx-background-radius: 10px;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #0078d4;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+    -fx-padding: 6 12 6 12;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #106ebe;
+}
+
+.button:pressed {
+    -fx-background-color: #005a9e;
+}
+
+.button:disabled {
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #666666;
+    -fx-cursor: default;
+}
+
+/* Button specific styles */
+#startButton {
+    -fx-background-color: #107c10;
+}
+
+#startButton:hover {
+    -fx-background-color: #0e6e0e;
+}
+
+#startButton:pressed {
+    -fx-background-color: #0c5d0c;
+}
+
+#stopButton {
+    -fx-background-color: #d13438;
+}
+
+#stopButton:hover {
+    -fx-background-color: #b92b2f;
+}
+
+#stopButton:pressed {
+    -fx-background-color: #a12226;
+}
+
+#resetButton {
+    -fx-background-color: #605e5c;
+}
+
+#resetButton:hover {
+    -fx-background-color: #484644;
+}
+
+#resetButton:pressed {
+    -fx-background-color: #323130;
+}
+
+/* Button Container */
+.button-container {
+    -fx-spacing: 8px;
+}
+
+/* Separators */
+.separator .line {
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px 0 0 0;
+}
+
+/* Canvas Container */
+.canvas-container {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* Canvas */
+#mapCanvas {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+
+/* Slider specific IDs for color coding */
+#pSlider .colored-track {
+    -fx-background-color: #8a2be2;
+}
+
+#pSlider .thumb {
+    -fx-background-color: #8a2be2;
+}
+
+#pSlider .thumb:hover {
+    -fx-background-color: #7a25cc;
+}
+
+#qSlider .colored-track {
+    -fx-background-color: #ff6347;
+}
+
+#qSlider .thumb {
+    -fx-background-color: #ff6347;
+}
+
+#qSlider .thumb:hover {
+    -fx-background-color: #e5533d;
+}
+
+#kSlider .colored-track {
+    -fx-background-color: #32cd32;
+}
+
+#kSlider .thumb {
+    -fx-background-color: #32cd32;
+}
+
+#kSlider .thumb:hover {
+    -fx-background-color: #2db82d;
+}
+
+#numPoints .colored-track {
+    -fx-background-color: #ffa500;
+}
+
+#numPoints .thumb {
+    -fx-background-color: #ffa500;
+}
+
+#numPoints .thumb:hover {
+    -fx-background-color: #e6940a;
+}
+
+#speedSlider .colored-track {
+    -fx-background-color: #20b2aa;
+}
+
+#speedSlider .thumb {
+    -fx-background-color: #20b2aa;
+}
+
+#speedSlider .thumb:hover {
+    -fx-background-color: #1c9d96;
+}
+
+/* Tooltip styles */
+.tooltip {
+    -fx-background-color: #323130;
+    -fx-text-fill: white;
+    -fx-background-radius: 4px;
+    -fx-font-size: 11px;
+    -fx-padding: 4 8 4 8;
+}
