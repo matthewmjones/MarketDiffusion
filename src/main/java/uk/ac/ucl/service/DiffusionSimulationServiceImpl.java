@@ -45,24 +45,72 @@ public class DiffusionSimulationServiceImpl implements DiffusionSimulationServic
             return new SimulationResult(currentTimeStep, 0, adoptedCount, totalPopulation, true);
         }
 
-        // Bass diffusion formula: p*N(t) + q*N(t)*A(t)/M where N(t)=non-adopters, A(t)=adopters, M=total
-        double newAdoptersFormula = params.getP() * nonAdoptedCount +
-                                   params.getQ() * nonAdoptedCount * adoptedCount / (double) totalPopulation;
-        int newAdopters = (int) Math.round(newAdoptersFormula);
-        newAdopters = Math.min(newAdopters, nonAdoptedCount);
+        // Bass diffusion components:
+        // Innovators: p * N(t) - chosen randomly
+        // Imitators: q * N(t) * A(t) / M - chosen by proximity
+        double innovatorsFormula = params.getP() * nonAdoptedCount;
+        double imitatorsFormula = params.getQ() * nonAdoptedCount * adoptedCount / (double) totalPopulation;
 
-        if (newAdopters > 0) {
-            selectNewAdoptersByDistance(population, newAdopters);
+        int innovators = (int) Math.ceil(innovatorsFormula);
+        int imitators = (int) Math.ceil(imitatorsFormula);
+
+        // Ensure we don't exceed available non-adopters
+        innovators = Math.min(innovators, nonAdoptedCount);
+        imitators = Math.min(imitators, nonAdoptedCount - innovators);
+
+        int actualNewAdopters = 0;
+
+        // Select innovators randomly
+        if (innovators > 0) {
+            actualNewAdopters += selectInnovators(population, innovators);
+        }
+
+        // Select imitators by proximity to existing adopters
+        if (imitators > 0) {
+            actualNewAdopters += selectImitatorsByDistance(population, imitators);
         }
 
         int finalAdoptedCount = countAdopters(population);
         boolean isComplete = finalAdoptedCount >= totalPopulation;
 
-        return new SimulationResult(currentTimeStep, newAdopters, finalAdoptedCount, totalPopulation, isComplete);
+        return new SimulationResult(currentTimeStep, actualNewAdopters, finalAdoptedCount, totalPopulation, isComplete);
     }
 
-    @Override
-    public void selectNewAdoptersByDistance(List<Person> population, int newAdopters) {
+    /**
+     * Selects innovators randomly from non-adopters (Bass model p component).
+     *
+     * @param population the population to select from
+     * @param numInnovators number of innovators to select
+     * @return actual number of innovators selected
+     */
+    private int selectInnovators(List<Person> population, int numInnovators) {
+        List<Person> nonAdopters = new ArrayList<>();
+        for (Person person : population) {
+            if (!person.hasAdopted()) {
+                nonAdopters.add(person);
+            }
+        }
+
+        if (nonAdopters.isEmpty()) return 0;
+
+        int actualInnovators = Math.min(numInnovators, nonAdopters.size());
+        Collections.shuffle(nonAdopters, random);
+
+        for (int i = 0; i < actualInnovators; i++) {
+            nonAdopters.get(i).setHasAdopted(true);
+        }
+
+        return actualInnovators;
+    }
+
+    /**
+     * Selects imitators based on proximity to existing adopters (Bass model q component).
+     *
+     * @param population the population to select from
+     * @param numImitators number of imitators to select
+     * @return actual number of imitators selected
+     */
+    private int selectImitatorsByDistance(List<Person> population, int numImitators) {
         List<Person> nonAdopters = new ArrayList<>();
         List<Person> adopters = new ArrayList<>();
 
@@ -74,7 +122,7 @@ public class DiffusionSimulationServiceImpl implements DiffusionSimulationServic
             }
         }
 
-        if (nonAdopters.isEmpty() || adopters.isEmpty()) return;
+        if (nonAdopters.isEmpty() || adopters.isEmpty()) return 0;
 
         List<PersonDistance> nonAdoptersWithDistance = new ArrayList<>();
         for (Person nonAdopter : nonAdopters) {
@@ -88,10 +136,19 @@ public class DiffusionSimulationServiceImpl implements DiffusionSimulationServic
 
         Collections.sort(nonAdoptersWithDistance, Comparator.comparingDouble(pd -> pd.distance));
 
-        int actualNewAdopters = Math.min(newAdopters, nonAdoptersWithDistance.size());
-        for (int i = 0; i < actualNewAdopters; i++) {
+        int actualImitators = Math.min(numImitators, nonAdoptersWithDistance.size());
+        for (int i = 0; i < actualImitators; i++) {
             nonAdoptersWithDistance.get(i).person.setHasAdopted(true);
         }
+
+        return actualImitators;
+    }
+
+    @Override
+    public void selectNewAdoptersByDistance(List<Person> population, int newAdopters) {
+        // Legacy method - kept for interface compatibility
+        // This method now only selects by distance (imitators only)
+        selectImitatorsByDistance(population, newAdopters);
     }
 
     @Override

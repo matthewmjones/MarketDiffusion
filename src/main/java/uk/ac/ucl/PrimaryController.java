@@ -110,8 +110,8 @@ public class PrimaryController implements Initializable {
         qSlider.setShowTickLabels(true);
         qSlider.setValue(0.01);
 
-        numPoints.setMin(1000);
-        numPoints.setMax(10000);
+        numPoints.setMin(5000);
+        numPoints.setMax(20000);
         numPoints.setMajorTickUnit(1000);
         numPoints.setMinorTickCount(1);
         numPoints.setSnapToTicks(true);
